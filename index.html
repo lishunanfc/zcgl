@@ -1043,7 +1043,7 @@ async function callDify(name,category,price,purchaseDate){
   ac.innerHTML=`<span class="spinner"></span>正在分析使用寿命…`;
   try{
     // 调用 Vercel 中转接口，Key 藏在服务器里不暴露
-    const r=await fetch('/API/proxy',{method:"POST",
+    const r=await fetch('https://zcgl-4ybh-blmp8l9sa-lx29.vercel.app/API/proxy',{method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({device_name:name,category,price:Number(price),purchase_date:purchaseDate})});
     if(!r.ok) throw new Error(`接口错误 ${r.status}`);
