@@ -1044,11 +1044,11 @@ async function callDify(name,category,price,purchaseDate){
   ab.style.display="block"; ab.className="ai-box pending";
   ac.innerHTML=`<span class="spinner"></span>正在分析使用寿命…`;
   try{
-    const r=await fetch(`${DIFY_BASE_URL}/workflows/run`,{method:"POST",
-      headers:{"Authorization":`Bearer ${DIFY_API_KEY}`,"Content-Type":"application/json"},
-      body:JSON.stringify({inputs:{device_name:name,category,price:Number(price),purchase_date:purchaseDate},
-        response_mode:"blocking",user:"asset-ledger-user"})});
-    if(!r.ok) throw new Error(`HTTP ${r.status}`);
+    // 调用 Vercel 中转接口，Key 藏在服务器里不暴露
+    const r=await fetch('/api/predict',{method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({device_name:name,category,price:Number(price),purchase_date:purchaseDate})});
+    if(!r.ok) throw new Error(`接口错误 ${r.status}`);
     const d=await r.json(); const out=d.data?.outputs;
     if(!out) throw new Error("无输出");
     const res={expectedLifespanYears:out.expected_lifespan_years,expiryDate:out.expiry_date,suggestionText:out.suggestion_text};
