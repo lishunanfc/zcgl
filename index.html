@@ -529,8 +529,6 @@ header.topbar{
 /* ============================================================
    CONFIG
 ============================================================ */
-const DIFY_API_KEY = "app-CWGou6G94p7yCUNQ4Dj1EXg2";
-const DIFY_BASE_URL = "https://api.dify.ai/v1";
 
 const CATEGORY_OPTIONS = {
   electronics:[
@@ -1045,7 +1043,7 @@ async function callDify(name,category,price,purchaseDate){
   ac.innerHTML=`<span class="spinner"></span>正在分析使用寿命…`;
   try{
     // 调用 Vercel 中转接口，Key 藏在服务器里不暴露
-    const r=await fetch('/api/predict',{method:"POST",
+    const r=await fetch('/API/proxy',{method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({device_name:name,category,price:Number(price),purchase_date:purchaseDate})});
     if(!r.ok) throw new Error(`接口错误 ${r.status}`);
